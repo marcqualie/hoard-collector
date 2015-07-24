@@ -8,7 +8,6 @@ import (
   "io/ioutil"
   "time"
   "gopkg.in/mgo.v2"
-  // "gopkg.in/mgo.v2/bson"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -25,7 +24,9 @@ func DataCreate(w http.ResponseWriter, r *http.Request) {
   event.Time = time.Now()
   mongo, err := mgo.Dial("mongodb://127.0.0.1:27017/hoard-development")
   collection := mongo.DB("hoard-development").C(fmt.Sprintf("events-%s", event.Stream))
-  collection.Insert(event)
+  var bsonEvent Event = event
+  bsonEvent.Stream = ""
+  collection.Insert(bsonEvent)
   w.Header().Set("Content-Type", "application/json; charset=UTF-8")
   json.NewEncoder(w).Encode(event)
 }
