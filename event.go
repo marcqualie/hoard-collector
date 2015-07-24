@@ -6,6 +6,6 @@ import (
 
 type Event struct {
   Stream   string             `json:"stream"`
-  Data     map[string]string  `json:"data" bson:",inline"`
+  Data     map[string]string  `json:"data"`
   Time     time.Time          `json:"time"`
 }
