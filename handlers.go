@@ -40,14 +40,8 @@ func DataIndex(w http.ResponseWriter, r *http.Request) {
     panic(err)
   }
   collection := mongo.DB("hoard-development").C(fmt.Sprintf("events-%s", stream))
-  // event := Event{Stream: params.Get("stream")}
   var events []Event
   count, err := collection.Count()
   collection.Find(bson.M{}).Sort("-1").All(&events)
-  // json.Marshel(results, &events)
-  // events[0] = event
   json.NewEncoder(w).Encode(Stream{Name: stream, Count: count, Data: events})
-  // mongo, err := mgo.Dial("mongodb://127.0.0.1:27017/hoard-development")
-  // collection := mongo.DB("hoard-development").C(fmt.Sprintf("events-%s", event.Stream))
-
 }
