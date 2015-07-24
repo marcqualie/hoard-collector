@@ -24,4 +24,10 @@ var routes = Routes{
     "DataCreate",
     DataCreate,
   },
+  Route{
+    "/data",
+    "GET",
+    "DataIndex",
+    DataIndex,
+  },
 }
