@@ -5,7 +5,8 @@ import (
 )
 
 type Event struct {
-  Stream   string             `json:"stream"`
-  Data     map[string]string  `json:"data"`
-  Time     time.Time          `json:"time"`
+  Name     string                   `json:"name" bson:"n"`
+  Stream   string                   `json:"stream" bson:",omitempty"`
+  Data     interface{}              `json:"data" bson:"d"`
+  Time     time.Time                `json:"time" bson:"t"`
 }
