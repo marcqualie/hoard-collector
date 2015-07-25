@@ -14,7 +14,7 @@ RUN apt-get -qq install -y make wget git-core \
  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root/go/src/hoard-collector/
-ADD * /root/go/src/hoard-collector/
+ADD src/* /root/go/src/hoard-collector/
 
 EXPOSE 80
 CMD go run *.go

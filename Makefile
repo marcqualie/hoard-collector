@@ -2,11 +2,11 @@ default: docker-build
 
 build:
 	`<.env xargs -I % echo "export %"`; \
-	go build -o hoard-collector *.go
+	go build -o hoard-collector src/*.go
 
 run:
 	`<.env xargs -I % echo "export %"`; \
-	go run *.go
+	go run src/*.go
 
 docker-build:
 	docker build -t tutum.co/marcqualie/hoard-collector .
