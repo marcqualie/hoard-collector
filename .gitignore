@@ -2,4 +2,4 @@
 .env
 
 # Compiled Files
-hoard-collector
+bin/hoard-collector
