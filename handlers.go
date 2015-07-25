@@ -4,6 +4,7 @@ import (
   "encoding/json"
   "fmt"
   "net/http"
+  "os"
   "io"
   "io/ioutil"
   "time"
@@ -25,8 +26,8 @@ func DataCreate(w http.ResponseWriter, r *http.Request) {
   json.Unmarshal(body, &payload)
   json.Unmarshal(body, &event)
   event.Time = time.Now()
-  mongo, err := mgo.Dial("mongodb://127.0.0.1:27017/hoard-development")
-  collection := mongo.DB("hoard-development").C(fmt.Sprintf("events-%s", payload.Stream))
+  mongo, err := mgo.Dial(os.Getenv("MONGODB_URL"))
+  collection := mongo.DB(os.Getenv("MONGODB_DB")).C(fmt.Sprintf("events-%s", payload.Stream))
   collection.Insert(event)
   w.Header().Set("Content-Type", "application/json; charset=UTF-8")
   json.NewEncoder(w).Encode(event)
@@ -35,11 +36,11 @@ func DataCreate(w http.ResponseWriter, r *http.Request) {
 func DataIndex(w http.ResponseWriter, r *http.Request) {
   params := r.URL.Query()
   stream := params.Get("stream")
-  mongo, err := mgo.Dial("mongodb://127.0.0.1:27017/hoard-development")
+  mongo, err := mgo.Dial(os.Getenv("MONGODB_URL"))
   if err != nil {
     panic(err)
   }
-  collection := mongo.DB("hoard-development").C(fmt.Sprintf("events-%s", stream))
+  collection := mongo.DB(os.Getenv("MONGODB_DB")).C(fmt.Sprintf("events-%s", stream))
   var events []Event
   count, err := collection.Count()
   collection.Find(bson.M{}).Sort("-1").All(&events)
