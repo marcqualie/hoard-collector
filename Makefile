@@ -14,8 +14,8 @@ docker-build:
 docker-run: docker-build
 	docker run --env-file .env -e "PORT=80" -h "hoard-collector-development" -a STDOUT -a STDERR -p "80:80" -i --rm --name hoard-collector tutum.co/marcqualie/hoard-collector
 
-docker-bash:
-	docker run --env-file .env -e "PORT=80" -h "hoard-collector-development" -i -t --rm --name hoard-collector-bash tutum.co/marcqualie/hoard-collector bash
+docker-shell:
+	docker run --env-file .env -e "PORT=80" -h "hoard-collector-development" -i -t --rm --name hoard-collector-bash tutum.co/marcqualie/hoard-collector sh
 
 docker-kill:
 	docker kill hoard-collector
