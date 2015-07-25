@@ -21,5 +21,7 @@ func main() {
   fmt.Println("  ", buildInfo)
   fmt.Println("  ", collectionNames)
   fmt.Println("  ")
-  log.Fatal(http.ListenAndServe(":8080", router))
+  fmt.Println("Listening for connections on port", os.Getenv("PORT"))
+  fmt.Println("  ")
+  log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("PORT")), router))
 }
